@@ -23,6 +23,7 @@ namespace ConsoleApp2
 
             var hola = "holis" ;
             asdasd
+            IWebElement hola =  ;
             pepito;
         }
     }
