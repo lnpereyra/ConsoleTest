@@ -22,9 +22,13 @@ namespace ConsoleApp2
             driver.FindElement(By.XPath(""));
 
             var hola = "holis" ;
+
             //asdasd
             //IWebElement hola =  ;
             //pepito;
+
+            pedorlinoi;
+
         }
     }
 }
