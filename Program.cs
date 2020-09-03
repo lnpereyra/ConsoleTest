@@ -29,8 +29,15 @@ namespace ConsoleApp2
 
             driver.SwitchTo().ParentFrame();
 
+            var aliado = "pepito";
 
+            driver.FindElement(By.XPath("")).SendKeys("asgadg");
 
+            Console.ReadLine();
+
+            Console.WriteLine(aliado.Length);
+
+            var a = Console.ReadLine();
         }
     }
 }
