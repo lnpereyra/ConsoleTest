@@ -35,7 +35,7 @@ namespace ConsoleApp2
 
             Console.ReadLine();
 
-            Console.WriteLine(aliaditos.Length);
+            Console.WriteLine(aliaditos.ToLower());
 
             var a = Console.ReadLine();
         }
