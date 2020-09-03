@@ -21,13 +21,15 @@ namespace ConsoleApp2
 
             driver.FindElement(By.XPath(""));
 
-            var hola = "holis" ;
+            IWebElement pedrito = driver.FindElement(By.XPath(""));
 
-            //asdasd
-            //IWebElement hola =  ;
-            //pepito;
+            pedrito.Click();
 
-            pedorlinoi;
+            driver.SwitchTo().Frame("");
+
+            driver.SwitchTo().ParentFrame();
+
+
 
         }
     }
