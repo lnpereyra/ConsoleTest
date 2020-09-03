@@ -29,7 +29,7 @@ namespace ConsoleApp2
 
             driver.SwitchTo().ParentFrame();
 
-            var aliado = "pepito";
+            var aliadito = "pepito";
 
             driver.FindElement(By.XPath("")).SendKeys("asgadg");
 
