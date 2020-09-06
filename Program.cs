@@ -17,6 +17,7 @@ namespace ConsoleApp2
         [SetUp]
         public void Initialize()
         {
+            driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://www.google.com");
             Console.WriteLine("Navigation to webpage");
         }
@@ -24,29 +25,61 @@ namespace ConsoleApp2
         [Test]
         public void ExecuteTest()
         {
+            //Arrange
             string GoogleSearch = "q";
 
-            string RosarioCentralWeb = "(.//h3[contains(text(),'Rosario Central')])[1]";
+            string AmazonWeb = "(.//a[contains(@href,'www.amazon.com')])[1]";
 
-            string TodasNotiHover = "(.//h3[contains(text(),'Rosario Central')])[1]";
+            string HoverCuenta = "nav-link-accountList";
 
-            string Noticias = "(.//a[contains(@class,'mitem dd')])[1]";
+            string Cuenta = ".//span[contains(text(),'Tu Cuenta')]";
 
-            SeleniumMethods.EnterText(driver, GoogleSearch, "rosario central", "Name");
+            string Covid = ".//a[contains(@href,'blog.aboutamazon')]";
+
+            string CovidPop = null;
+
+            SeleniumMethods.EnterText(driver, GoogleSearch, "amazon", "Name");
 
             driver.FindElement(By.Name(GoogleSearch)).Submit();
 
-            driver.FindElement(By.XPath(RosarioCentralWeb)).Click();
+            driver.FindElement(By.XPath(AmazonWeb)).Click();            
 
-            driver.Manage().Window.Maximize();
+            System.Threading.Thread.Sleep(1000);
 
-            Actions builder = new Actions(driver);
+            Actions hover = new Actions(driver);
 
-            builder.MoveToElement(driver.FindElement(By.XPath(Noticias))).Perform();
+            hover
+                .MoveToElement(driver.FindElement(By.Id(HoverCuenta)))
+                .Build()
+                .Perform();
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);            
+            driver.FindElement(By.XPath(Cuenta)).Click();
+
+            Console.WriteLine("Menu Mi Cuenta abierto");
+
+            System.Threading.Thread.Sleep(1000);
 
             Console.WriteLine("Test Executed");
+
+            //Act
+
+            try
+            {
+                CovidPop = driver.FindElement(By.XPath(Covid)).Text;
+            }
+            catch (Exception)
+            {
+                throw new Exception("The element Covid is not present in the amazon Account Profile");
+            }
+
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+
+            js.ExecuteScript("arguments[0].scrollIntoView();", driver.FindElement(By.XPath("(//span[contains(text(),'Identif')])[3]")));
+
+            System.Threading.Thread.Sleep(2000);
+
+            //Assert
+            Assert.IsTrue(CovidPop == "Respuesta ante el COVID-19");
         }
 
         [Test]
