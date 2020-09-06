@@ -1,43 +1,69 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Interactions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp2
 {
     class Program
     {
+        IWebDriver driver = new ChromeDriver();
+
         static void Main(string[] args)
         {
-            IWebDriver driver = new ChromeDriver();
-            
+        }
+
+        [SetUp]
+        public void Initialize()
+        {
             driver.Navigate().GoToUrl("http://www.google.com");
+            Console.WriteLine("Navigation to webpage");
+        }
 
-            //thisisatest
+        [Test]
+        public void ExecuteTest()
+        {
+            string GoogleSearch = "q";
 
-            driver.FindElement(By.XPath(""));
+            string RosarioCentralWeb = "(.//h3[contains(text(),'Rosario Central')])[1]";
 
-            IWebElement pedrito = driver.FindElement(By.XPath(""));
+            string TodasNotiHover = "(.//h3[contains(text(),'Rosario Central')])[1]";
 
-            pedrito.Click();
+            string Noticias = "(.//a[contains(@class,'mitem dd')])[1]";
 
-            driver.SwitchTo().Frame("");
+            SeleniumMethods.EnterText(driver, GoogleSearch, "rosario central", "Name");
 
-            driver.SwitchTo().ParentFrame();
+            driver.FindElement(By.Name(GoogleSearch)).Submit();
 
-            var aliaditos = "pepitos";
+            driver.FindElement(By.XPath(RosarioCentralWeb)).Click();
 
-            driver.FindElement(By.XPath("")).SendKeys("asgadg");
+            driver.Manage().Window.Maximize();
 
-            Console.ReadLine();
+            Actions builder = new Actions(driver);
 
-            Console.WriteLine(aliaditos.ToLower());
+            builder.MoveToElement(driver.FindElement(By.XPath(Noticias))).Perform();
 
-            var a = Console.ReadLine();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);            
+
+            Console.WriteLine("Test Executed");
+        }
+
+        [Test]
+        public void Test1()
+        {
+        }
+
+        [Test]
+        public void Test2()
+        {
+        }
+
+        [TearDown]
+        public void Clean()
+        {
+            driver.Close();
+
         }
     }
 }
